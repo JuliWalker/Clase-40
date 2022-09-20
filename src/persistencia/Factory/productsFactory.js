@@ -7,3 +7,5 @@ export default class ProductsFactory{
         return new MongoDBProducts()
     }
 }
+
+// no estoy usando los archivos de Factory porque me tira error de que no es un constructor la funcion Static GetDao

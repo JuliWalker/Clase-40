@@ -1,7 +1,9 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
-import { usersDao as api } from '../database/daos/index.js'
-import { encryptPassword, comparePassword } from '../config/bcrypt.js'
+import UsersServices from "../../services/usersServices.js";
+import { encryptPassword, comparePassword } from '../bcryptConfig/bcrypt.js'
+
+const servicesUser = new UsersServices()
 
 const LocalStrategy = Strategy
 
@@ -10,14 +12,14 @@ passport.use('registro', new LocalStrategy({
     passwordField:'password',
     passReqToCallback:true  // esto ultimo es para habilitar a Passport a tomar el resto de la info que viene en el objeto "req" ademas del pass y el user
 },async(req,email,password,done)=>{
-    const usuarioDB = await api.getByMail(email)
+    const usuarioDB = await servicesUser.getByMail(email)
     if (usuarioDB) {
         return done(null,false)
     }
     // encripto la pass antes de guardarla en mongo
     req.body.password = await encryptPassword(password);
     // guardo el usuario y lo guardo en una constante para devolverlo con el done
-    const usuarioMongo = await api.saveNew(req.body)
+    const usuarioMongo = await servicesUser.saveNew(req.body)
     return done(null,usuarioMongo)
 }))
 
@@ -26,7 +28,7 @@ passport.use('login', new LocalStrategy({
     passwordField:'password',
     passReqToCallback:true
 },async(req,email,password,done)=>{
-    const usuarioDB = await api.getByMail(email)
+    const usuarioDB = await servicesUser.getByMail(email)
     if (!usuarioDB) {
         return done(null,false, { message: "El usuario no existe" })
     }
@@ -43,6 +45,6 @@ passport.serializeUser((usuario,done)=>{
 })
 
 passport.deserializeUser(async(id,done)=>{
-    const usuario = await api.getOne(id)
+    const usuario = await servicesUser.getOne(id)
     done(null,usuario)
 })

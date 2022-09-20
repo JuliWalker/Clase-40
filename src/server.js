@@ -3,7 +3,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import 'dotenv/config'
 import passport from "passport";
-import './passport/local.js'
+import './utils/passport/local.js'
 import morgan from "morgan";
 import indexRouter from './routes/indexRoutes.js';
 import os from "os";

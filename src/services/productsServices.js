@@ -1,8 +1,10 @@
-import ProductsFactory from "../persistencia/Factory/productsFactory";
+// import ProductsFactory from "../persistencia/Factory/productsFactory.js";
+import { MongoDBProducts } from '../persistencia/daos/products/productsDao.js'
 
 export default class ProductsServices{
     constructor(){
-        this.ProductsDao = new ProductsFactory.getDao()
+        // this.ProductsDao = new ProductsFactory.getDao()
+        this.ProductsDao = new MongoDBProducts()
     }
 
     async getAll(){

@@ -1,13 +1,15 @@
-import UsersFactory from "../persistencia/Factory/usersFactory";
+// import UsersFactory from "../persistencia/Factory/usersFactory.js";
+import { MongoDBUsers } from '../persistencia/daos/users/usersDao.js'
 
 export default class UsersServices{
     constructor(){
-        this.UsersDao = new UsersFactory.getDao()
+        // this.UsersDao = new UsersFactory.getDao()
+        this.UsersDao = new MongoDBUsers()
     }
 
     async getAll(){
         try {
-            const all = await this.UsersDao.getAll({})
+            const all = await this.UsersDao.getAll()
             return all
         }
         catch (error) {
@@ -54,7 +56,7 @@ export default class UsersServices{
 
     async getByName(name) {
         try{
-            const user = await this.UsersDao.getByName( {nombre:name} )
+            const user = await this.UsersDao.getByName(name)
             return user
         }catch(err){
             throw new Error(err)
@@ -63,7 +65,8 @@ export default class UsersServices{
 
     async getByMail(mail) {
         try{
-            const user = await this.UsersDao.getByMail( {email:mail} )
+            console.log(mail)
+            const user = await this.UsersDao.getByMail(mail)
             return user
         }catch(err){
             throw new Error(err)

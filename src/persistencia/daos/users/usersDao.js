@@ -1,5 +1,5 @@
 import MongoClass from "../mongoClass.js";
-import { usuariosSchema } from "../../MongoSchemas/UsuariosSchema"
+import { usuariosSchema } from "../../MongoSchemas/UsuariosSchema.js"
 
 
 export class MongoDBUsers extends MongoClass {
@@ -18,6 +18,7 @@ export class MongoDBUsers extends MongoClass {
 
     async getByMail(mail) {
         try{
+            console.log(mail)
             const user = await this.collection.findOne( {email:mail} )
             return user
         }catch(err){

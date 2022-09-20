@@ -1,25 +1,15 @@
 import { Router } from "express";
+import productsRouter from "./products.js";
+import usersRouter from "./users.js";
+import isAuth from "../utils/middleware/isAuth.js";
 
 const router = Router();
 
-/** Routes */
-/* import homeRouter from './home.js';
-import carritosRouter from "./CarritosRoutes.js";
-import loginRouter from './login.js';
-import logoutRouter from './logout.js';
-import registerRouter from './register.js';
-import nodemailer from './nodemailer.js'; */
+router.get("/", isAuth, (req, res) => {
+    res.redirect("/api/productos");
+});
 
-import ProductsRouter from "./routes/products";
-const routerProducts = new ProductsRouter()
-
-router.use('/productos',routerProducts.init())
-
-/* router.use('/', homeRouter);
-router.use('/carrito',carritosRouter)
-router.use('/login', loginRouter);
-router.use('/logout', logoutRouter);
-router.use('/registro', registerRouter);
-router.use('/nodemailer', nodemailer); */
+router.use('/productos', isAuth, productsRouter)
+router.use('/users',usersRouter)
 
 export default router;

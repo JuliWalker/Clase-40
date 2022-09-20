@@ -1,5 +1,5 @@
-import ProductsServices from "../services/productsServices";
-import UsersServices from "../services/usersServices";
+import ProductsServices from "../services/productsServices.js";
+import UsersServices from "../services/usersServices.js";
 
 export default class ProductsController{
     constructor() {
